@@ -86,8 +86,16 @@
 
             scope.goNext = function(form){
                 WizardHandler.wizard().checkValid(form);
+                // if(WizardHandler.wizard().currentStepNumber() === 2) {
+                // scope.previewRepayment = true;
+                // }
             }
 
+            scope.goPrevious = function() {
+                // WizardHandler.wizard().goTo(2);
+                console.log('previewRepayment is false')
+                scope.previewRepayment = false;
+            }
             scope.handleDatatables = function (datatables) {
                 if (!_.isUndefined(datatables) && datatables.length > 0) {
                     scope.formData.datatables = [];
@@ -298,6 +306,8 @@
 
             scope.previewRepayments = function () {
                 // Make sure charges and collaterals are empty before initializing.
+                console.log('preview is running');
+                scope.previewRepayment = true;
                 delete scope.formData.charges;
                 delete scope.formData.collateral;
                 if(_.isUndefined(scope.formData.datatables) || (!_.isUndefined(scope.formData.datatables) && scope.formData.datatables.length == 0)) {
@@ -345,11 +355,17 @@
                 if(this.formData.interestCalculationPeriodType == 0){
                     this.formData.allowPartialPeriodInterestCalcualtion = false;
                 }
+                
                 resourceFactory.loanResource.save({command: 'calculateLoanSchedule'}, this.formData, function (data) {
+                    console.log(data);
                     scope.repaymentscheduleinfo = data;
                     scope.previewRepayment = true;
                     scope.formData.syncRepaymentsWithMeeting = scope.syncRepaymentsWithMeeting;
+                    scope.previewRepayment = true;
+
                 });
+                scope.previewRepayment = false;
+                console.log(scope.previewRepayment);
 
             }
 

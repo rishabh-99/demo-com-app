@@ -160,7 +160,7 @@ angular.module('notificationWidget', [])
                         $rootScope.errorStatus = 'Internal Server Error [500].';
                     } else {
                         for(var i = 0; i < data.length; i++) {
-                            //console.log(data[i]);
+                            console.log(data[i]);
                             var jsonErrors = JSON.parse(data[i].body);
                             var valErrors = jsonErrors.errors;
                             var errorArray = new Array();
